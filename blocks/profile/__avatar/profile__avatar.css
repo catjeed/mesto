@@ -1,8 +1,14 @@
 .profile__avatar {
-    background-image: url(../../../images/photo.svg);
+    background-image: url(../../../images/avatar.jpg);
     background-size: cover;
     object-fit: contain;
     height: 120px;
     width: 120px;
     border-radius: 50%;
+}
+
+@media screen and (max-width: 650px) {
+    .profile__avatar {
+        grid-row: 1;
+    }
 }

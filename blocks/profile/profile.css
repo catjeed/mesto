@@ -1,6 +1,19 @@
 .profile {
-    margin: 40px 200px 50px;
+    margin: 40px auto 50px;
     display: grid;
     column-gap: 10px;
     grid-template-columns: 140px 300px 25px 380px;
+}
+
+@media screen and (max-width: 900px) {
+    .profile {
+        grid-template-columns: repeat(3, auto)
+    }
+}
+
+@media screen and (max-width: 650px) {
+    .profile {
+        grid-template-columns: 300px;
+        grid-template-rows: repeat(3, auto);
+    }
 }
