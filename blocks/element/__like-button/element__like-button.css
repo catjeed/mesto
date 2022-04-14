@@ -21,7 +21,3 @@
 .element__like-button:hover {
     opacity: 0.5;
 }
-
-.element__like-button:active {
-    background-color: #000;
-}

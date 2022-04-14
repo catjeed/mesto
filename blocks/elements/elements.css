@@ -1,5 +1,5 @@
 .elements {
-    margin: 0 auto 67px;
+    margin: 0 auto;
     display: grid;
     grid-template-columns: repeat(3, 282px);
     gap: 20px 17px;
@@ -8,5 +8,13 @@
 @media screen and (max-width: 900px) {
     .elements {
         grid-template-columns: repeat(2, 282px);
+        gap: 10px;
+        margin: 0 auto;
+    }
+}
+
+@media screen and (max-width: 599px) {
+    .elements {
+        grid-template-columns: 282px;
     }
 }
