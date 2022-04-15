@@ -4,8 +4,15 @@
     margin: 67px 200px 60px;
 }
 
-@media screen and (max-width: 599px) {
+@media screen and (max-width: 900px) {
     .footer {
-        margin: 48px 50px 46px;
+        margin: 67px 163px 60px;
     }
 }
+
+@media screen and (max-width: 599px) {
+    .footer {
+        margin: 48px 19px 36px;
+    }
+}
+
