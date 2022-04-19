@@ -29,5 +29,7 @@
         justify-self: center;
         width: 282px;
         border-radius: 2px;
+        margin: 30px auto 36px;
+        background-size: 16px;
     }
 }
