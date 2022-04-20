@@ -2,13 +2,13 @@ const popup = document.querySelector('.popup');
 const popupCloseButton = document.querySelector('.popup__close');
 const editButton = document.querySelector('.profile__edit-button');
 const formElement = document.querySelector('.popup__container');
-const nameInput = formElement.querySelector('.popup__input_name');
-const aboutInput = formElement.querySelector('.popup__input_about');
+const nameInput = formElement.querySelector('.popup__input_type_name');
+const aboutInput = formElement.querySelector('.popup__input_type_description');
 const profileName = document.querySelector('.profile__name');
 const profileAbout = document.querySelector('.profile__about');
 
 function popupOpenToggle() {
-    popup.classList.toggle('popup__opened');
+    popup.classList.toggle('popup_opened');
     nameInput.value = profileName.textContent;
     aboutInput.value = profileAbout.textContent;
 }
