@@ -1,81 +1,104 @@
 const popup = document.querySelector('.popup');
 const popupCloseButton = document.querySelector('.popup__close');
-const editButton = document.querySelector('.profile__edit-button');
 const addButton = document.querySelector('.profile__add-button');
+const editButton = document.querySelector('.profile__edit-button');
+const likeButton = document.querySelector('.element__like-button');
+const placePopup = document.querySelector('.place-popup');
+const profilePopup = document.querySelector('.profile-popup');
 const formElement = document.querySelector('.popup__container');
 const nameInput = formElement.querySelector('.popup__input_type_name');
 const aboutInput = formElement.querySelector('.popup__input_type_description');
 const profileName = document.querySelector('.profile__name');
 const profileAbout = document.querySelector('.profile__about');
 
-const initialCards = [
-    {
-        name: 'Архыз',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-    },
-    {
-        name: 'Челябинская область',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-    },
-    {
-        name: 'Иваново',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-    },
-    {
-        name: 'Камчатка',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-    },
-    {
-        name: 'Холмогорский район',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-    },
-    {
-        name: 'Байкал',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-    }
-];
 
-const cardsContainer = document.querySelector('.elements');
-const renderCard = (cards) => {
-    cardsContainer.insertAdjacentHTML(
-        "beforeend",
-        `
-                  <div class="element">
-                    <img src="${cards.link}" alt="" class="element__image">
-                    <h2 class="element__title">${cards.name}</h2>
-                    <button class="element__button element__button-like" type="button"></button>
-                    <button class="element__button element__button-delete" type="button"></button>
-                  </div>
-        `
-    )
+
+`function popupOpen() {
+    popup.classList.add('popup_opened');
+}`
+
+function popupClose() {
+    popup.classList.remove('popup_opened');
 }
-
-initialCards.forEach((cards) => {
-    renderCard(cards);
-})
-
-function popupOpenToggle() {
-    popup.classList.toggle('popup_opened');
-    nameInput.value = profileName.textContent;
-    aboutInput.value = profileAbout.textContent;
-}
-
 function formSubmitHandler (evt) {
     evt.preventDefault();
     profileName.textContent = nameInput.value;
     profileAbout.textContent = aboutInput.value;
-    popupOpenToggle()
+    popupClose();
 }
 
-editButton.addEventListener('click', popupOpenToggle);
-popupCloseButton.addEventListener('click', popupOpenToggle);
+addButton.addEventListener('click',  () => {
+    placePopup.classList.add('popup_opened');
+});
+editButton.addEventListener('click', () => {
+    nameInput.value = profileName.textContent;
+    aboutInput.value = profileAbout.textContent;
+    profilePopup.classList.add('popup_opened');
+});
+popupCloseButton.addEventListener('click', popupClose);
+
 formElement.addEventListener('submit', formSubmitHandler);
-addButton.addEventListener('click', popupOpenToggle);
 
-`function popupOverlayClickHandler(evt){  // функция закрытия попапа при нажатии за его границы
-    if (evt.target === evt.currentTarget) {
-        popupOpenToggle();
+
+const initialCards = [
+    {
+        name: 'Архыз',
+        link: '../images/arkhyz.jpg'
+    },
+    {
+        name: 'Челябинская область',
+        link: '../images/chelyabinsk-oblast.jpg'
+    },
+    {
+        name: 'Иваново',
+        link: '../images/ivanovo.jpg'
+    },
+    {
+        name: 'Камчатка',
+        link: '../images/kamchatka.jpg'
+    },
+    {
+        name: 'Холмогорский район',
+        link: '../images/kholmogorsky-rayon.jpg'
+    },
+    {
+        name: 'Байкал',
+        link: '../images/baikal.jpg'
     }
-}
+];
 
-popup.addEventListener('click', popupOverlayClickHandler); `
+const cardsTemplate = document.querySelector("#cards-template").content.querySelector(".element");
+const cardsContainer = document.querySelector(".elements");
+const deleteCard = (event) => {
+    event.target.closest('.element').remove();
+};
+const likeCard = (event) => {
+    event.target.closest('.element__button-like').classList.toggle('element__button-like_active');
+};
+
+const generateCards = (cards) => {
+    const newCard = cardsTemplate.cloneNode(true);
+
+    const titleCard = newCard.querySelector('.element__title');
+    titleCard.textContent = cards.name;
+
+    const imageCard = newCard.querySelector('.element__image');
+    imageCard.src = cards.link;
+
+    const deleteButton = newCard.querySelector('.element__button-delete');
+    deleteButton.addEventListener('click', deleteCard);
+
+    const likeButton = newCard.querySelector('.element__button-like');
+    likeButton.addEventListener('click', likeCard)
+
+    return newCard;
+};
+
+const renderCards = (cards) => {
+    cardsContainer.prepend(generateCards(cards));
+};
+
+initialCards.forEach((cards) => {
+    renderCards(cards);
+});
+
