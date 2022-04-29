@@ -1,13 +1,18 @@
 const addButton = document.querySelector('.profile__add-button');
 const editButton = document.querySelector('.profile__edit-button');
-const popupCloseButton = document.querySelector('.popup__close-button');
+const popupCloseButton = document.querySelectorAll('.popup__close-button');
 const placePopup = document.querySelector('.place-popup');
 const profilePopup = document.querySelector('.profile-popup');
-const formElement = document.querySelector('.popup__container');
-const nameInput = formElement.querySelector('.popup__input_type_name');
-const aboutInput = formElement.querySelector('.popup__input_type_description');
+const profileFormElement = document.querySelector('.popup__container_type_profile');
+const placeFormElement = document.querySelector('.popup__container_type_place');
+const nameInput = profileFormElement.querySelector('.popup__input_type_name');
+const aboutInput = profileFormElement.querySelector('.popup__input_type_description');
+const titleInput = placeFormElement.querySelector('.popup__input_type_title');
+const linkInput = placeFormElement.querySelector('.popup__input_type_link');
 const profileName = document.querySelector('.profile__name');
 const profileAbout = document.querySelector('.profile__about');
+const placeForm = document.querySelector('.popup__form_type_place');
+const profileForm = document.querySelector('.popup__form_type_profile');
 const initialCards = [
     {
         name: 'Архыз',
@@ -54,40 +59,54 @@ const generateCards = (elements) => {  // работает
     likeButton.addEventListener('click', likeCard);
     return newElement;
 };
-
 const renderCards = (elements) => {
     elementsContainer.prepend(generateCards(elements));  // работает
 };
 
+
+
 function popupOpen(popup) {
-    popup.classList.add('popup_opened');
+    popup.classList.add('popup_opened'); // работает
 }
-
 function popupClose(popup) {
-    popup.classList.remove('popup_opened'); // не работает
+    popup.classList.remove('popup_opened'); // работает, но не на крестик
 }
-
-function formSubmitHandler (event) { // работает
+function profileFormSubmitHandler (event) { // работает
     event.preventDefault();
     profileName.textContent = nameInput.value;
     profileAbout.textContent = aboutInput.value;
     popupClose(profilePopup);
 }
+function placeFormSubmitHandler (event) {
+    event.preventDefault();
+    const newCard = generateCards(
+        {
+            name: titleInput.value,
+            link: linkInput.value
+        }
+    );
+    elementsContainer.prepend(newCard);
+        popupClose(placePopup);
+}
 
-addButton.addEventListener('click',  () => { // работает
+addButton.addEventListener('click',  function () {
+    placeForm.reset();
     popupOpen(placePopup);
 });
-
 editButton.addEventListener('click', () => { // работает
     nameInput.value = profileName.textContent;
     aboutInput.value = profileAbout.textContent;
     popupOpen(profilePopup);
 });
-
-formElement.addEventListener('submit', formSubmitHandler); // работает
-
+profileFormElement.addEventListener('submit', profileFormSubmitHandler); // работает, но только на основном попапе
+placeFormElement.addEventListener('submit', placeFormSubmitHandler);
 initialCards.forEach((elements) => { // работает
     renderCards(elements);
 });
+popupCloseButton.forEach((button) => {
+    const popup = button.closest('.popup');
+    button.addEventListener('click', () => popupClose(popup));
+});
+
 
 
