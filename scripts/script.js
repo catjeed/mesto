@@ -1,8 +1,8 @@
 const addButton = document.querySelector('.profile__add-button');
 const editButton = document.querySelector('.profile__edit-button');
-const popupCloseButton = document.querySelectorAll('.popup__close-button');
-const placePopup = document.querySelector('.place-popup');
-const profilePopup = document.querySelector('.profile-popup');
+const placePopup = document.querySelector('.popup_type_place');
+const popupCloseButton = document.querySelectorAll(".popup__close-button");
+const profilePopup = document.querySelector('.popup_type_profile');
 const profileFormElement = document.querySelector('.popup__container_type_profile');
 const placeFormElement = document.querySelector('.popup__container_type_place');
 const nameInput = profileFormElement.querySelector('.popup__input_type_name');
@@ -12,7 +12,12 @@ const linkInput = placeFormElement.querySelector('.popup__input_type_link');
 const profileName = document.querySelector('.profile__name');
 const profileAbout = document.querySelector('.profile__about');
 const placeForm = document.querySelector('.popup__form_type_place');
-const profileForm = document.querySelector('.popup__form_type_profile');
+const imagePreviewPopup = document.querySelector('.popup_type_image');
+const imagePopupSrc = document.querySelector('.popup__image');
+const imagePopupCaption = document.querySelector('.popup__image-caption');
+const clickClose = (event) => {
+    popupClose(event.target.closest('.popup'));
+};
 const initialCards = [
     {
         name: 'Архыз',
@@ -42,10 +47,10 @@ const initialCards = [
 const elementsTemplate = document.querySelector("#elements-template").content.querySelector(".element"); // работает
 const elementsContainer = document.querySelector(".elements"); // работает
 const deleteCard = (event) => {
-    event.target.closest('.element').remove(); // не работает на новой карточке
+    event.target.closest('.element').remove(); // работает
 };
 const likeCard = (event) => {
-    event.target.classList.toggle('element__button-like_active'); // не работает на новой карточке
+    event.target.classList.toggle('element__button-like_active'); // // работает
 };
 const generateCards = (elements) => {  // работает
     const newElement = elementsTemplate.cloneNode(true);
@@ -57,19 +62,23 @@ const generateCards = (elements) => {  // работает
     deleteButton.addEventListener('click', deleteCard);
     const likeButton = newElement.querySelector('.element__button-like');
     likeButton.addEventListener('click', likeCard);
+    imageCard.addEventListener("click", openImagePopup);
     return newElement;
 };
 const renderCards = (elements) => {
     elementsContainer.prepend(generateCards(elements));  // работает
 };
-
-
-
+function openImagePopup(event){
+    imagePopupSrc.src = event.target.src;
+    imagePopupCaption.textContent = event.target.closest('.element')
+        .querySelector(".element__title").textContent;
+    popupOpen(imagePreviewPopup);
+}
 function popupOpen(popup) {
     popup.classList.add('popup_opened'); // работает
 }
 function popupClose(popup) {
-    popup.classList.remove('popup_opened'); // работает, но не на крестик
+    popup.classList.remove('popup_opened'); // работает
 }
 function profileFormSubmitHandler (event) { // работает
     event.preventDefault();
@@ -77,7 +86,7 @@ function profileFormSubmitHandler (event) { // работает
     profileAbout.textContent = aboutInput.value;
     popupClose(profilePopup);
 }
-function placeFormSubmitHandler (event) {
+function placeFormSubmitHandler (event) { // работает
     event.preventDefault();
     const newCard = generateCards(
         {
@@ -88,8 +97,7 @@ function placeFormSubmitHandler (event) {
     elementsContainer.prepend(newCard);
         popupClose(placePopup);
 }
-
-addButton.addEventListener('click',  function () {
+addButton.addEventListener('click', () => {
     placeForm.reset();
     popupOpen(placePopup);
 });
@@ -98,15 +106,15 @@ editButton.addEventListener('click', () => { // работает
     aboutInput.value = profileAbout.textContent;
     popupOpen(profilePopup);
 });
-profileFormElement.addEventListener('submit', profileFormSubmitHandler); // работает, но только на основном попапе
+popupCloseButton.forEach( // работает
+    (button) => {
+        button.addEventListener("click", clickClose);
+    }
+);
+profileFormElement.addEventListener('submit', profileFormSubmitHandler); // работает
 placeFormElement.addEventListener('submit', placeFormSubmitHandler);
 initialCards.forEach((elements) => { // работает
     renderCards(elements);
 });
-popupCloseButton.forEach((button) => {
-    const popup = button.closest('.popup');
-    button.addEventListener('click', () => popupClose(popup));
-});
-
 
 
