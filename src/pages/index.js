@@ -11,6 +11,8 @@ import {
     aboutInput, placeForm,
     validationObj
 } from '../components/constants.js';
+import '../pages/index.css'
+
 
 const submitProfileForm = (data) => {
     const {popupName, popupAbout} = data;
@@ -21,6 +23,7 @@ const submitProfileForm = (data) => {
 const submitCardForm = (data) => {
     const card = createCard({
         name: data['popupTitle'],
+        alt: data['popupTitle'],
         link: data['popupLink']
     });
     section.addItem(card)

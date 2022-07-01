@@ -1,4 +1,4 @@
-# Проект 4: Mesto  
+# Проект 8: Mesto  
 Учебный проект Я.Практикума курса "ВЕБ-разработчик" по созданию интерактивного сайта c адаптивным дизайном и логикой на JavaScript.
 ## Технологии
 1. HTML и CSS
@@ -7,8 +7,9 @@
     + Grid
 2. Figma
 3. Методологии БЭМ и БЭМ Nested
-4. JavaScript
-5. Git
-
+4. ООП
+5. JavaScript
+6. Git
+7. Webpack
 # Ссылка на проект:
   https://catjeed.github.io/mesto/
