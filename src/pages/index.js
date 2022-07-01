@@ -1,5 +1,5 @@
 import {Card} from "../components/Card.js";
-import {initialCards} from "../components/utils.js";
+import {initialCards} from "../utilities/utils.js";
 import FormValidator from "../components/FormValidator.js";
 import {Section} from "../components/Section.js";
 import PopupWithImage from "../components/PopupWithImage.js";
@@ -10,7 +10,7 @@ import {
     nameInput, profileForm,
     aboutInput, placeForm,
     validationObj
-} from '../components/constants.js';
+} from '../utilities/constants.js';
 import '../pages/index.css'
 
 
